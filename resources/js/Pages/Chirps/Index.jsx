@@ -1,9 +1,10 @@
 import  React  from 'react';
 import PrimaryButton from '@/Components/PrimaryButton';
+import Chirp from '@/Components/Chirp';
 import  AuthenticateLayout  from '@/Layouts/AuthenticatedLayout';
 import { Head, useForm } from '@inertiajs/inertia-react';
 import InputError from '@/Components/InputError';
-export default function Index({auth}) {
+export default function Index({auth,chirps}) {
     const {data, setData, post, processing, reset, errors} = useForm({
         message: ''
     })
@@ -13,7 +14,7 @@ export default function Index({auth}) {
     }
     return (
     <AuthenticateLayout auth={auth}>
-        <Head title='Chips' />
+        <Head title='Chirps' />
         <div className='max-w-2xl mx-auto p-4 sm:p-6 le:p-8'>
             <form onSubmit={submit}>
                 <textarea
@@ -26,7 +27,13 @@ export default function Index({auth}) {
                 <InputError message={errors.message} className="mt-2"/>
                 <PrimaryButton className='mt-4' disabled={processing}>Chirp</PrimaryButton>
             </form>
+            <div className='mt-6 bg-white shadow-sm rounded-lg divide-y'>
+                {
+                    chirps.map(chirp => <Chirp key={chirp.id} chirp={chirp} />)
+                }
+            </div>
         </div>
+
     </AuthenticateLayout>
     )
 }
